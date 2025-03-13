@@ -9,9 +9,21 @@ pipeline {
     }
 
     stages {
+        stage('Clean Workspace') {
+            steps {
+                deleteDir()
+            }
+        }
+
         stage('Clone Repository') {
             steps {
                 git branch: BRANCH, url: REPO_URL
+            }
+        }
+
+        stage('Debug') {
+            steps {
+                sh 'ls -R' // List all files to check if hello.cpp exists
             }
         }
 
