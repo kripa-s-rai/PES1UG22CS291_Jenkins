@@ -1,37 +1,39 @@
 pipeline {
     agent any
+
+    environment {
+        REPO_URL = 'https://github.com/kripa-s-rai/PES1UG22CS291_Jenkins.git'
+        BRANCH = 'main'
+        BINARY_NAME = 'hello'
+        SOURCE_FILE = 'hello.cpp'
+    }
+
     stages {
-        stage('Clone repository') {
+        stage('Clone Repository') {
             steps {
-                checkout([$class: 'GitSCM',
-                    branches: [[name: '*/main']],
-                    userRemoteConfigs: [[url: 'https://github.com/kripasrai/PES1UG22CS291_Jenkins.git']]])
-            }
-        }
-        
-        stage('Build') {
-            steps {
-                build 'PES1UG22CS564-1'
-                sh 'g++ ./main/hello.cpp -o output'
+                git branch: BRANCH, url: REPO_URL
             }
         }
 
-        stage('Test') {
+        stage('Compile') {
             steps {
-                sh './output'
+                sh 'g++ -o ${BINARY_NAME} ${SOURCE_FILE}'
             }
         }
 
-        stage('Deploy') {
+        stage('Run Executable') {
             steps {
-                echo 'deploy'
+                sh './${BINARY_NAME}'
             }
         }
     }
 
     post {
+        success {
+            echo "✅ Build and execution completed successfully!"
+        }
         failure {
-            error 'Pipeline failed'
+            echo "❌ Build failed! Check errors."
         }
     }
 }
