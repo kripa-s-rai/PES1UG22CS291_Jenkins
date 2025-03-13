@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                eccho 'Building the project...'  
+                echo 'Building the project...'
             }
         }
         stage('Test') {
@@ -15,6 +15,6 @@ pipeline {
             steps {
                 echo 'Deploying application...'
             }
-        }
-    }
+        }
+    }
 }
