@@ -5,7 +5,7 @@ pipeline {
         REPO_URL = 'https://github.com/kripa-s-rai/PES1UG22CS291_Jenkins.git'
         BRANCH = 'main'
         BINARY_NAME = 'hello'
-        SOURCE_FILE = 'hello.cpp'
+        SOURCE_FILE = 'main/hello.cpp'  
     }
 
     stages {
@@ -23,7 +23,9 @@ pipeline {
 
         stage('Debug') {
             steps {
-                sh 'ls -R' // List all files to check if hello.cpp exists
+                echo "### Checking files in workspace ###"
+                sh 'pwd'   // Print current directory
+                sh 'ls -R' // List all files to verify hello.cpp exists
             }
         }
 
